@@ -1,0 +1,25 @@
+name: Simple Matrix Example
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Runs this job twice: once for version 18, once for version 20
+        node-version: [18, 20]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Reads the current version from the matrix array above
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run Build
+        run: echo "Building project using Node version ${{ matrix.node-version }}"
