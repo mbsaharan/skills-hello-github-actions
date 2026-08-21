@@ -1,0 +1,14 @@
+name: External Trigger Workflow
+
+on:
+  repository_dispatch:
+    types: [deploy_event] # Custom event name you define
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Acknowledge Event
+        run: |
+          echo "Triggered externally!"
+          echo "Payload message: ${{ github.event.client_payload.message }}"
