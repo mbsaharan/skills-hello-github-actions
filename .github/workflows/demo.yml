@@ -1,0 +1,21 @@
+name: Scope Demo
+
+on: workflow_dispatch # Allows manually triggering the run from GitHub's UI
+
+env:
+  APP_ENV: "production" # Top Level
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: "staging" # Job Level (Overrides Top Level)
+
+    steps:
+      - name: Step 1 (Uses Job Level)
+        run: echo "Env is $APP_ENV" # Outputs: staging
+
+      - name: Step 2 (Uses Step Level)
+        env:
+          APP_ENV: "development" # Step Level (Overrides Job Level)
+        run: echo "Env is $APP_ENV" # Outputs: development
