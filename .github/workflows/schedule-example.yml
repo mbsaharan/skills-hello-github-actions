@@ -1,0 +1,16 @@
+name: Scheduled Daily Task
+
+on:
+  schedule:
+    # Runs every day at midnight UTC (0 0 * * *)
+    - cron: '0 0 * * *'
+
+jobs:
+  run-scheduled-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest commit on default branch
+        uses: actions/checkout@v4
+
+      - name: Run script
+        run: echo "Running automated scheduled task on latest commit of main branch."
