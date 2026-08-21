@@ -1,0 +1,20 @@
+name: CI Example
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Clone the repository onto the runner runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Access files directly after checkout
+      - name: Run a build script
+        run: |
+          echo "Listing repository files:"
+          ls -la
