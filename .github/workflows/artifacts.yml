@@ -1,0 +1,43 @@
+name: Build and Upload Artifact Example
+
+on: [push]
+
+jobs:
+  # Job 1: Build the application and save the artifact
+  build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Simulating a build step that generates output files
+      - name: Create build files
+        run: |
+          mkdir -p dist
+          echo "Main application binary" > dist/app.bin
+          echo "Configuration file" > dist/config.json
+
+      # Upload the 'dist' folder as an artifact
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-files  # Name of the artifact download zip
+          path: dist/              # Path to the directory or files to save
+          retention-days: 7        # Optional: How long to keep the file (default: 90)
+
+  # Job 2: Download and use the artifact from Job 1
+  deploy-job:
+    needs: build-job # Ensures Job 1 completes successfully first
+    runs-on: ubuntu-latest
+    steps:
+      # Download the uploaded artifact onto this new runner instance
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release-files # Must match the upload name above
+          path: downloaded-dist/
+
+      - name: Verify downloaded files
+        run: |
+          ls -la downloaded-dist/
+          cat downloaded-dist/config.json
