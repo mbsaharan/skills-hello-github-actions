@@ -1,0 +1,20 @@
+name: Math Workflow
+
+on: [push]
+
+jobs:
+  run-math:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Send input (num: 5)
+      - name: Calculate
+        id: math-step
+        uses: ./.github/actions/math
+        with:
+          num: 5
+
+      # 2. Print output (10)
+      - name: Print Result
+        run: echo "The answer is ${{ steps.math-step.outputs.result }}"
