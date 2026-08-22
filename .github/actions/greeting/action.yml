@@ -1,0 +1,14 @@
+name: Simple Greeting Action
+description: Prints a quick welcome message
+
+inputs:
+  name-to-greet:
+    description: Who to say hello to
+    required: true
+    default: World
+
+runs:
+  using: composite
+  steps:
+    - run: echo "Hello, ${{ inputs.name-to-greet }}! Welcome to GitHub Actions."
+      shell: bash
