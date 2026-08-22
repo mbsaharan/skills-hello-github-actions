@@ -1,0 +1,17 @@
+name: Math Action
+description: Doubles an input number
+
+inputs:
+  num:
+    required: true
+
+outputs:
+  result:
+    value: ${{ steps.calc.outputs.double_num }}
+
+runs:
+  using: composite
+  steps:
+    - id: calc
+      run: echo "double_num=$((${{ inputs.num }} * 2))" >> $GITHUB_OUTPUT
+      shell: bash
