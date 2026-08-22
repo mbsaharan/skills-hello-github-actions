@@ -1,0 +1,16 @@
+name: Simple Workflow
+
+on: [push]
+
+jobs:
+  run-my-action:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Download your repo files onto the runner
+      - uses: actions/checkout@v4
+
+      # Step 2: Run your local custom action
+      - name: Run Greeting Action
+        uses: ./.github/actions/greeting
+        with:
+          name-to-greet: 'Bilal'
