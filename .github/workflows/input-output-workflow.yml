@@ -1,0 +1,20 @@
+name: Simple Workflow with Output
+
+on: [push]
+
+jobs:
+  run-my-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Give the step an 'id' so we can reference its output later
+      - name: Run Greeting Action
+        id: greeting-step
+        uses: ./.github/actions/greeting
+        with:
+          name-to-greet: 'Bilal'
+
+      # 2. Access the output using: ${{ steps.<STEP_ID>.outputs.<OUTPUT_NAME> }}
+      - name: Print Returned Output
+        run: echo "Action returned: ${{ steps.greeting-step.outputs.formatted-message }}"
