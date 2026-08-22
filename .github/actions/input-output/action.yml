@@ -1,5 +1,5 @@
-name: Simple Greeting Action
-description: Generates and outputs a welcome message
+name: Clean Greeting Action
+description: Generates and outputs a welcome message without cluttering logs
 
 inputs:
   name-to-greet:
@@ -7,7 +7,6 @@ inputs:
     required: true
     default: World
 
-# 1. Declare the output key that external workflows can read
 outputs:
   formatted-message:
     description: The generated greeting string
@@ -17,7 +16,7 @@ runs:
   using: composite
   steps:
     - id: generate-text
-      # 2. Write the key=value pair to the special $GITHUB_OUTPUT file
+      # Quietly compute and set output; no console output here!
       run: |
         TEXT="Hello, ${{ inputs.name-to-greet }}! Generated at $(date)."
         echo "greeting-out=$TEXT" >> $GITHUB_OUTPUT
