@@ -1,0 +1,22 @@
+name: Dynamic Env Example
+on: push
+
+# 1. Workflow-level environment variables
+env:
+  DEPLOY_TARGET: "production"
+  APP_PORT: "8080"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Use as Shell Environment Variable
+        if: env.DEPLOY_TARGET == 'production'
+        run: echo "Deploying to $DEPLOY_TARGET on port $APP_PORT"
+
+      - name: Use as Context Variable
+        if: env.DEPLOY_TARGET == 'production'
+        run: echo "Target is ${{ env.DEPLOY_TARGET }}"
+
+# The `if:` key is a job-level CONTROL key. GitHub evaluates this before setting up job environment contexts.
