@@ -1,0 +1,16 @@
+name: Production Deployment Check
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prod-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Log deployment branch
+        run: echo "Deploying to production server on branch $GITHUB_REF"
