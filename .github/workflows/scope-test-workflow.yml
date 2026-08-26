@@ -1,0 +1,25 @@
+name: Scope Test Workflow
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    env:
+      APP_VERSION: "v1.0.0" # Outer/job-level variable
+
+    steps:
+      - name: Try Direct Export (Does NOT Work for Step 2)
+        run: export APP_VERSION="v2.0.0"
+
+      - name: Check Value
+        run: echo "$APP_VERSION" # Prints: "v1.0.0" (Unchanged!)
+
+      - name: Override via $GITHUB_ENV (Works for Step 4)
+        run: echo "APP_VERSION=v2.0.0" >> "$GITHUB_ENV"
+
+      - name: Check Value Again
+        run: echo "$APP_VERSION" # Prints: "v2.0.0" (Updated!)
