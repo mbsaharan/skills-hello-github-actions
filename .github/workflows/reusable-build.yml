@@ -12,9 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Execute Shared Build Logic
-        run: echo "Building app for environment: ${{ inputs.environment_name }}"
-
-# GitHub Actions will not find or run workflow files placed inside subdirectories under .github/workflows/. You cannot 
-# put reusable workflows in subdirectories under .github/workflows/ either. GitHub Actions enforces the exact same rule 
-# for reusable workflows as it does for regular workflows: all workflow files must sit directly at the root level of 
-# .github/workflows/.
+        run: echo "Building app for environment:${{ inputs.environment_name }}"
