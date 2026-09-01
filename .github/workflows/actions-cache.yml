@@ -1,0 +1,30 @@
+name: Pure Cache Demo
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  cache-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Tell GitHub to save/restore the "my-downloads" folder
+      - name: Cache Image Folder
+        id: image-cache
+        uses: actions/cache@v4
+        with:
+          path: my-downloads
+          key: sample-jpg-v1
+
+      # Step 2: Download the JPG ONLY IF it wasn't restored from cache
+      - name: Download Image
+        if: steps.image-cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache Miss: Downloading file..."
+          mkdir -p my-downloads
+          curl -s -o my-downloads/sample.jpg https://picsum.photos/400/300
+
+      # Step 3: Verify the file exists on the runner machine
+      - name: Verify File
+        run: ls -lh my-downloads/sample.jpg
