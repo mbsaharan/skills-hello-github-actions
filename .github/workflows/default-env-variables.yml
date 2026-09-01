@@ -1,16 +1,14 @@
-name: Production Deployment Check
+name: CI
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   prod-check:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log deployment branch
+      - name: Output deployment branch
         run: echo "Deploying to production server on branch $GITHUB_REF"
