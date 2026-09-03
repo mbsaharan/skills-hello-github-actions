@@ -17,6 +17,6 @@ jobs:
     needs: job_1
     steps:
       - uses: actions/download-artifact@v4
-      with:
-        name: file
-      run: cat file.txt
+        with:
+          name: file
+      - run: cat file.txt
