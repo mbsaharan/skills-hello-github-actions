@@ -1,4 +1,3 @@
-# .github/workflows/automerge.yml
 name: Auto Merge on Label
 
 on:
@@ -13,6 +12,10 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - run: gh pr merge ${{ github.event.pull_request.number }} --squash --admin
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Auto-merge PR using GitHub CLI
+        run: gh pr merge ${{ github.event.pull_request.number }} --squash --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
