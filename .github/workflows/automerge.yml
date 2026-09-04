@@ -12,10 +12,7 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Auto-merge PR using GitHub CLI
+      - name: Auto-merge PR
         run: gh pr merge ${{ github.event.pull_request.number }} --squash --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
